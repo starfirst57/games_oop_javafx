@@ -2,36 +2,36 @@ package ru.job4j.puzzle;
 
 public class Win {
     public static boolean check(int[][] board) {
-        int index = diagonalSearch(board);
-        if (index > 0 ) {
-            return verticalSearch(board, index) || horizontalSearch(board, index);
+        boolean result = false;
+        for (int index = 0; index < board.length; index++) {
+            if (board[index][index] == 1) {
+                if (monoHorizontal(board, index) || monoVertical(board, index)) {
+                    result = true;
+                    break;
+                }
+            }
+
         }
-        return false;
+        return result;
     }
-    private static int diagonalSearch(int[][] board) {
-        int result = -1;
+    public static boolean monoVertical(int[][] board, int column) {
+        boolean result = true;
         for (int i = 0; i < board.length; i++) {
-            if (board[i][i] == 1) {
-                result = i;
+            if (board[i][column] != 1) {
+                result = false;
                 break;
             }
         }
         return result;
     }
-    private static boolean horizontalSearch(int[][] board, int index) {
-        for (int i = 0; i < board[index].length; i++) {
-            if (board[index][i] != 1) {
-                return false;
+    public static boolean monoHorizontal(int[][] board, int row) {
+        boolean result = true;
+        for (int i = 0; i < board[row].length; i++) {
+            if (board[row][i] != 1) {
+                result = false;
+                break;
             }
         }
-        return true;
-    }
-    private static boolean verticalSearch(int[][] board, int index) {
-        for (int i = 0; i < board.length; i++) {
-            if (board[i][index] != 1) {
-                return false;
-            }
-        }
-        return true;
+        return result;
     }
 }
